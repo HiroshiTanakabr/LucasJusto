@@ -36,6 +36,55 @@ const defaultData = {
               title: "Orion Cascade",
               meta: "Órion · 2023",
             },
+            {
+              url: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
+              title: "Nebula Veil",
+              meta: "Órion · 2024",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Galáxias & Horizonte Profundo",
+      description: "Composições raras de galáxias em contraste com o vazio silencioso.",
+      albums: [
+        {
+          name: "Arquivos do Cosmos",
+          description: "Mapeamentos detalhados de galáxias espirais e suas estruturas.",
+          images: [
+            {
+              url: "https://images.unsplash.com/photo-1473929730315-95ef68d5e9ac?auto=format&fit=crop&w=1200&q=80",
+              title: "Deep Spiral",
+              meta: "Andrômeda · 2022",
+            },
+            {
+              url: "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=1200&q=80",
+              title: "Halo Reach",
+              meta: "Triangulum · 2023",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Fenômenos Raros",
+      description: "Eventos transitórios capturados com precisão científica e composição estética.",
+      albums: [
+        {
+          name: "Auroras Magnéticas",
+          description: "A dança do vento solar em silêncio absoluto.",
+          images: [
+            {
+              url: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80",
+              title: "Magnetic Drift",
+              meta: "Islândia · 2021",
+            },
+            {
+              url: "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?auto=format&fit=crop&w=1200&q=80",
+              title: "Polar Silence",
+              meta: "Noruega · 2022",
+            },
           ],
         },
       ],

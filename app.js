@@ -100,86 +100,106 @@ const getData = () => {
   return defaultData;
 };
 
-const data = getData();
-
 const heroIntro = document.getElementById("hero-intro");
 const heroLocation = document.getElementById("hero-location");
 const heroHighlight = document.getElementById("hero-highlight");
 const heroQuote = document.getElementById("hero-quote");
 const heroStatCount = document.getElementById("hero-stat-count");
 
-heroIntro.textContent = data.hero.intro;
-heroLocation.textContent = data.hero.location;
-heroHighlight.textContent = data.hero.highlight;
-heroQuote.textContent = data.hero.quote;
-
-const totalImages = data.categories.reduce((sum, category) => {
-  return (
-    sum +
-    category.albums.reduce((albumSum, album) => albumSum + album.images.length, 0)
-  );
-}, 0);
-heroStatCount.textContent = totalImages;
-
 const galleryContent = document.getElementById("gallery-content");
-
-data.categories.forEach((category) => {
-  const categoryWrapper = document.createElement("div");
-  categoryWrapper.className = "gallery-category";
-  categoryWrapper.dataset.reveal = "";
-
-  const header = document.createElement("div");
-  header.className = "category-header";
-  header.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p>`;
-
-  const albumGrid = document.createElement("div");
-  albumGrid.className = "album-grid";
-
-  category.albums.forEach((album) => {
-    const card = document.createElement("div");
-    card.className = "album-card";
-
-    const meta = document.createElement("div");
-    meta.className = "album-meta";
-    meta.innerHTML = `<h4>${album.name}</h4><p>${album.description}</p>`;
-
-    const images = document.createElement("div");
-    images.className = "album-images";
-
-    album.images.forEach((image) => {
-      const img = document.createElement("img");
-      img.src = image.url;
-      img.alt = image.title;
-      img.loading = "lazy";
-      img.addEventListener("click", () => openLightbox(image));
-      images.appendChild(img);
-    });
-
-    card.append(meta, images);
-    albumGrid.appendChild(card);
-  });
-
-  categoryWrapper.append(header, albumGrid);
-  galleryContent.appendChild(categoryWrapper);
-});
 
 const aboutText = document.getElementById("about-text");
 const aboutPublications = document.getElementById("about-publications");
 const aboutGear = document.getElementById("about-gear");
 const aboutLicensing = document.getElementById("about-licensing");
 
-aboutText.textContent = data.about.text;
-aboutPublications.textContent = data.about.publications;
-aboutGear.textContent = data.about.gear;
-aboutLicensing.textContent = data.about.licensing;
-
 const contactEmail = document.getElementById("contact-email");
 const contactPhone = document.getElementById("contact-phone");
 const contactLocation = document.getElementById("contact-location");
 
-contactEmail.textContent = data.contact.email;
-contactPhone.textContent = data.contact.phone;
-contactLocation.textContent = data.contact.location;
+const renderHero = (data) => {
+  heroIntro.textContent = data.hero.intro;
+  heroLocation.textContent = data.hero.location;
+  heroHighlight.textContent = data.hero.highlight;
+  heroQuote.textContent = data.hero.quote;
+
+  const totalImages = data.categories.reduce((sum, category) => {
+    return (
+      sum +
+      category.albums.reduce((albumSum, album) => albumSum + album.images.length, 0)
+    );
+  }, 0);
+  heroStatCount.textContent = totalImages;
+};
+
+const renderGallery = (data) => {
+  galleryContent.innerHTML = "";
+
+  data.categories.forEach((category) => {
+    const categoryWrapper = document.createElement("div");
+    categoryWrapper.className = "gallery-category";
+    categoryWrapper.dataset.reveal = "";
+
+    const header = document.createElement("div");
+    header.className = "category-header";
+    header.innerHTML = `<h3>${category.name}</h3><p>${category.description}</p>`;
+
+    const albumGrid = document.createElement("div");
+    albumGrid.className = "album-grid";
+
+    category.albums.forEach((album) => {
+      const card = document.createElement("div");
+      card.className = "album-card";
+
+      const meta = document.createElement("div");
+      meta.className = "album-meta";
+      meta.innerHTML = `<h4>${album.name}</h4><p>${album.description}</p>`;
+
+      const images = document.createElement("div");
+      images.className = "album-images";
+
+      album.images.forEach((image) => {
+        if (!image.url) {
+          return;
+        }
+        const img = document.createElement("img");
+        img.src = image.url;
+        img.alt = image.title;
+        img.loading = "lazy";
+        img.addEventListener("click", () => openLightbox(image));
+        images.appendChild(img);
+      });
+
+      card.append(meta, images);
+      albumGrid.appendChild(card);
+    });
+
+    categoryWrapper.append(header, albumGrid);
+    galleryContent.appendChild(categoryWrapper);
+  });
+};
+
+const renderAbout = (data) => {
+  aboutText.textContent = data.about.text;
+  aboutPublications.textContent = data.about.publications;
+  aboutGear.textContent = data.about.gear;
+  aboutLicensing.textContent = data.about.licensing;
+};
+
+const renderContact = (data) => {
+  contactEmail.textContent = data.contact.email;
+  contactPhone.textContent = data.contact.phone;
+  contactLocation.textContent = data.contact.location;
+};
+
+const renderAll = (data) => {
+  renderHero(data);
+  renderGallery(data);
+  renderAbout(data);
+  renderContact(data);
+  const revealItems = document.querySelectorAll("[data-reveal]");
+  revealItems.forEach((item) => revealObserver.observe(item));
+};
 
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -210,7 +230,6 @@ lightbox.addEventListener("click", (event) => {
 
 document.getElementById("footer-year").textContent = new Date().getFullYear();
 
-const revealItems = document.querySelectorAll("[data-reveal]");
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -222,7 +241,13 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.2 }
 );
 
-revealItems.forEach((item) => revealObserver.observe(item));
+renderAll(getData());
+
+window.addEventListener("storage", (event) => {
+  if (event.key === STORAGE_KEY && event.newValue) {
+    renderAll(JSON.parse(event.newValue));
+  }
+});
 
 const ambientGlow = document.querySelector(".ambient-glow");
 window.addEventListener("scroll", () => {
