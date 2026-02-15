@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel • Lucas Justo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">LJ</span>
+      <div>
+        <p class="brand-title">LUCAS JUSTO</p>
+        <p class="brand-subtitle">Painel Administrativo</p>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Voltar ao site</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-login" id="login-panel">
+      <h1>Acesso seguro</h1>
+      <p>Entre com a senha para gerenciar o conteúdo do site.</p>
+      <div class="admin-form">
+        <label for="password">Senha</label>
+        <input id="password" type="password" placeholder="Digite a senha" />
+        <button id="login-button" class="button">Entrar no painel</button>
+        <p id="login-error" class="error"></p>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="admin-panel" hidden>
+      <div class="section-heading">
+        <p class="section-eyebrow">Gerenciamento completo</p>
+        <h2>Conteúdo global</h2>
+        <p class="section-description">Todas as alterações são salvas automaticamente e publicadas imediatamente.</p>
+      </div>
+
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h3>Introdução</h3>
+          <label>Texto principal</label>
+          <textarea id="hero-intro-input" rows="4"></textarea>
+          <label>Localização</label>
+          <input id="hero-location-input" type="text" />
+          <label>Destaque editorial</label>
+          <textarea id="hero-highlight-input" rows="3"></textarea>
+          <label>Citação</label>
+          <textarea id="hero-quote-input" rows="2"></textarea>
+        </div>
+
+        <div class="admin-card">
+          <h3>Sobre o autor</h3>
+          <label>Texto</label>
+          <textarea id="about-text-input" rows="5"></textarea>
+          <label>Publicações</label>
+          <input id="about-publications-input" type="text" />
+          <label>Equipamentos</label>
+          <input id="about-gear-input" type="text" />
+          <label>Licenciamento</label>
+          <input id="about-licensing-input" type="text" />
+        </div>
+
+        <div class="admin-card">
+          <h3>Contato</h3>
+          <label>Email</label>
+          <input id="contact-email-input" type="email" />
+          <label>Telefone</label>
+          <input id="contact-phone-input" type="text" />
+          <label>Atendimento</label>
+          <input id="contact-location-input" type="text" />
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3>Galeria</h3>
+        <div id="gallery-admin"></div>
+        <div class="admin-actions">
+          <button id="add-category" class="button ghost">Adicionar categoria</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>
